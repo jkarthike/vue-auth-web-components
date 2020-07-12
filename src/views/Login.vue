@@ -5,7 +5,7 @@
 			<p>Username: maxmustermann</p>
 			<p>Password: test123</p>
 		</div>
-		<real-digital-form action="http://localhost:4000/users/authenticate" method="post">
+		<real-digital-form :action="`${apiRoot}/users/authenticate`" method="post">
 			<real-digital-textfield
 				name="username"
 				type="text"
@@ -35,6 +35,11 @@ import { setStorage } from "../utils/localStorage";
 
 export default {
 	name: "Login",
+	data() {
+		return {
+			apiRoot: process.env.VUE_APP_API_ROOT
+		};
+	},
 	mounted() {
 		const form = document.querySelector("real-digital-form");
 		form.addEventListener("submit", response => {
