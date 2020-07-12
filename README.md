@@ -18,6 +18,8 @@ npm run serve
 npm run build
 ```
 
-### Customize configuration
+### Runs in below port
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+http://localhost:8080
+```
