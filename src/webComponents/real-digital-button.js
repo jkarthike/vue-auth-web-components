@@ -1,4 +1,4 @@
-export default class RealDigitalButton extends HTMLElement {
+class RealDigitalButton extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });

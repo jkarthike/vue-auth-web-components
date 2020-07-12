@@ -1,4 +1,4 @@
-export default class RealDigitalTextField extends HTMLElement {
+class RealDigitalTextField extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
@@ -112,6 +112,11 @@ export default class RealDigitalTextField extends HTMLElement {
             return regex.test(this.inputElement.value);
         }
         return true;
+    }
+
+    clearValue() {
+        this.inputElement.value = null;
+        this.toggleErrorMessage(false);
     }
 }
 
