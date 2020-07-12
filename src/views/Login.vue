@@ -1,6 +1,10 @@
 <template>
     <div class="login-container">
         <h1>Login!!!</h1>
+        <div class="credentials-container m-y-10">
+            <p>Username: maxmustermann</p>
+            <p>Password: test123</p>
+        </div>
         <real-digital-form
             action="http://localhost:4000/users/authenticate"
             method="post"
@@ -20,19 +24,33 @@
                 placeholder="Password"
                 required="true"
             ></real-digital-textfield>
-            <real-digital-button>Send</real-digital-button>
+            <real-digital-button>Login</real-digital-button>
         </real-digital-form>
     </div>
 </template>
 
 <script>
-import firebase from "firebase";
 import RealDigitalTextField from "../webComponents/real-digital-textfield";
 import RealDigitalButton from "../webComponents/real-digital-button";
 import RealDigitalForm from "../webComponents/real-digital-form";
 
+import { setStorage } from "../utils/localStorage";
+
 export default {
-    name: "Login"
+    name: "Login",
+    mounted() {
+        const form = document.querySelector("real-digital-form");
+        form.addEventListener("submit", response => {
+            if (response && response.detail) {
+                response.detail.data.then(dataObj => {
+                    setStorage("auth-token", dataObj.token);
+                    this.$router.push({
+                        name: "Home"
+                    });
+                });
+            }
+        });
+    }
 };
 </script>
 
@@ -41,5 +59,13 @@ export default {
     width: 190px;
     margin: 0 auto;
     text-align: center;
+
+    .credentials-container {
+        background: $white;
+        width: 100%;
+        border: 1px solid $primary;
+        padding: 5px;
+        font-size: 13px;
+    }
 }
 </style>

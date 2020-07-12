@@ -1,19 +1,22 @@
 <template>
     <div class="home">
-        <p>
-            Hello user!
-            <br />
-            <real-digital-button @click="onClick">Logout</real-digital-button>
-        </p>
+        <h1>Home!!!</h1>
+        <div class="m-y-10">Hello user!</div>
+        <br />
+        <real-digital-button @click="onClick">Logout</real-digital-button>
     </div>
 </template>
 
 <script>
+import { removeStorage } from "../utils/localStorage";
+
 import RealDigitalButton from "../webComponents/real-digital-button";
+
 export default {
     name: "Home",
     methods: {
         onClick() {
+            removeStorage("auth-token");
             this.$router.push({
                 name: "Login"
             });
