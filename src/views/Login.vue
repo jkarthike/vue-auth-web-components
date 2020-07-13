@@ -38,15 +38,15 @@ export default {
     name: "Login",
     data() {
         return {
+            form: null,
             apiRoot: process.env.VUE_APP_API_ROOT,
             isLoginFailed: false
         };
     },
-    mounted() {
-        const form = document.querySelector("real-digital-form");
-        form.addEventListener("submit", response => {
-            if (response && response.detail) {
-                response.detail.data.then(dataObj => {
+    methods: {
+        submitCallback(event) {
+            if (event && event.detail) {
+                event.detail.data.then(dataObj => {
                     setStorage("auth-token", dataObj.token);
                     this.isLoginFailed = false;
                     this.$router.push({
@@ -54,10 +54,25 @@ export default {
                     });
                 });
             }
-        });
-        form.addEventListener("submitionError", response => {
+        },
+        submitionErrorCallback() {
             this.isLoginFailed = true;
-        });
+        }
+    },
+    mounted() {
+        this.form = document.querySelector("real-digital-form");
+        this.form.addEventListener("submit", this.submitCallback);
+        this.form.addEventListener(
+            "submitionError",
+            this.submitionErrorCallback
+        );
+    },
+    destroyed() {
+        this.form.removeEventListener("submit", this.submitCallback);
+        this.form.removeEventListener(
+            "submitionError",
+            this.submitionErrorCallback
+        );
     }
 };
 </script>
